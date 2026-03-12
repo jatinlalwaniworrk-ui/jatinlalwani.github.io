@@ -216,7 +216,7 @@ section{padding:6rem 5%}
 .form-group select{appearance:none;cursor:pointer}
 .form-group select option{background:var(--navy);color:var(--white)}
 .form-group textarea{resize:vertical;min-height:120px}
-.form-submit{width:100%;background:var(--blue);color:var(--white);border:none;padding:.9rem;border-radius:8px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:1rem;font-weight:600;cursor:none;transition:background .2s,transform .2s;letter-spacing:.03em;position:relative;overflow:hidden}
+.form-submit{width:100%;background:var(--blue);color:var(--white);border:none;padding:.9rem;border-radius:8px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s,transform .2s;letter-spacing:.03em;position:relative;overflow:hidden}
 .form-submit::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .4s}
 .form-submit:hover::after{left:140%}
 .form-submit:hover{background:#636366;transform:translateY(-2px)}
@@ -2091,6 +2091,70 @@ body * { will-change: auto !important; }
 @media (prefers-reduced-motion: reduce) {
   .flow-lines-svg { animation: none !important; }
   .fl2, .fl4      { animation: none !important; }
+}
+
+/* ── MOBILE / iPHONE OPTIMISATIONS ─────────────────────────────── */
+
+/* 1. Remove blue tap flash on iOS */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+
+/* 2. Safe area insets — notch + home bar */
+nav {
+  padding-left: max(5%, env(safe-area-inset-left)) !important;
+  padding-right: max(5%, env(safe-area-inset-right)) !important;
+}
+footer {
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+}
+
+/* 3. iOS input zoom fix — font-size must be >= 16px */
+@media (max-width: 960px) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* 4. Touch-friendly tap targets — min 44px height */
+@media (max-width: 960px) {
+  .nav-links a,
+  .btn-primary,
+  .btn-outline,
+  .cert-btn,
+  .form-submit {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-submit { display: flex; }
+}
+
+/* 5. Kill hover lift animations on touch devices */
+@media (hover: none) {
+  .edu-card:hover, .cert-card:hover,
+  .research-card:hover, .ref-card:hover,
+  .stat-card:hover, .tool-card:hover,
+  .service-card:hover, .tag:hover,
+  .btn-primary:hover, .btn-outline:hover,
+  .hero-socials a:hover, .cert-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* 6. Small iPhone (375px and below) */
+@media (max-width: 390px) {
+  .hero { padding: 5rem 4% 3rem; }
+  section { padding: 3rem 4%; }
+  .hero-name .nline { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .sec-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
+  .stat-cards { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .form-wrap { padding: 1.25rem; }
+  .hero-btns { flex-direction: column; }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-outline { width: 100%; text-align: center; }
 }
 
 </style>
