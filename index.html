@@ -293,13 +293,22 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
   body{cursor:auto}
   #cursor-dot,#cursor-ring{display:none}
   nav{padding:1rem 4%}
-  .nav-links{display:none;position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;align-items:center;gap:2rem;z-index:999}
+  /* Nav overlay — scrollable so all items visible */
+  .nav-links{display:none;position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;z-index:999;overflow-y:auto;padding:5rem 2rem 3rem}
   .nav-links.open{display:flex}
   .nav-hamburger{display:flex;z-index:1001}
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-right{display:none}
+  /* Hero: stack vertically, photo on top */
+  .hero-inner{grid-template-columns:1fr;text-align:center;grid-template-rows:auto auto}
+  .hero-right{display:flex;justify-content:center;order:-1;margin-bottom:2rem}
+  .photo-wrap{width:160px;height:160px}
+  .ring1{width:190px;height:190px}
+  .ring2{width:215px;height:215px}
+  .hero{padding:6rem 5% 3rem;min-height:auto}
+  .hero-name .nline{font-size:clamp(2.4rem,9vw,3.5rem)}
+  .hero-bio{font-size:.9rem;max-width:100%}
   .hero-badge,.hero-btns,.hero-socials{justify-content:center}
-  .hero-bio{margin:0 auto 2rem}
+  .hero-bio{margin:0 auto 1.5rem}
+  .hero-btns{gap:.75rem}
   .about-grid{grid-template-columns:1fr}
   .timeline::before{left:1rem}
   .tl-item{grid-template-columns:1fr;padding-left:2.5rem}
@@ -317,9 +326,9 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
   .stat-cards{grid-template-columns:1fr 1fr}
 }
 @media(max-width:600px){
-  .photo-wrap{width:240px;height:240px}
-  .ring1{width:280px;height:280px}
-  .ring2{width:310px;height:310px}
+  .photo-wrap{width:140px;height:140px}
+  .ring1{width:170px;height:170px}
+  .ring2{width:190px;height:190px}
   .stat-cards{grid-template-columns:1fr 1fr}
   .ach-num{font-size:clamp(3rem,12vw,5rem)}
   section{padding:4rem 5%}
