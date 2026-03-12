@@ -1047,7 +1047,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
     @keyframes canvasFloat{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(0,-1.5%,0) scale(1.015)}}
     @keyframes grainDrift{0%{transform:translate(0,0)}25%{transform:translate(-1.2%,-0.8%)}50%{transform:translate(0.8%,1.1%)}75%{transform:translate(1.1%,-0.5%)}100%{transform:translate(0,0)}}
 
-    nav,.hero,section,footer{position:relative;z-index:1}
+    .hero,section,footer{position:relative;z-index:1}
     .hero{overflow:hidden}
     .orb{filter:blur(12px);opacity:.14 !important}
     .hero-inner{align-items:end}
@@ -1320,7 +1320,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
     body::after{
       opacity:.03 !important;
     }
-    nav,.hero,section,footer{position:relative;z-index:1}
+    .hero,section,footer{position:relative;z-index:1}
     .hero-right{
       position:relative !important;
       right:auto !important;
@@ -1407,7 +1407,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
       opacity:.03 !important;
       z-index:0 !important;
     }
-    nav,.hero,section,footer,#progress,#cursor-dot,#cursor-ring{position:relative !important;z-index:1 !important;}
+    .hero,section,footer,#progress,#cursor-dot,#cursor-ring{position:relative !important;z-index:1 !important;}
     .hero,.hero-inner,.hero-copy,.hero-right,.scroll-ind{overflow:visible !important;}
     @media(max-width:960px){
       body::before{background-size:44px 44px !important;opacity:.2 !important;}
