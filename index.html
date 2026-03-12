@@ -1168,7 +1168,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
     .tl-item:nth-child(even) .tl-content{overflow:visible}
 
     @media(max-width:960px){
-      .hero-right{display:none !important}
+      .hero-right{display:flex !important}
     }
 
   
@@ -1353,7 +1353,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
     }
     @media(max-width:960px){
       body::before{background-size: 44px 44px; opacity:.22;}
-      .hero-right{display:none !important}
+      .hero-right{display:flex !important}
     }
 
   
@@ -1390,7 +1390,7 @@ footer{background:#1C1C1E;text-align:center;padding:1.5rem;font-size:.82rem;colo
     }
     @media(max-width:960px){
       body::before{background-size:44px 44px !important;opacity:.22 !important;}
-      .hero-right{display:none !important;}
+      .hero-right{display:flex !important;}
     }
 
   
@@ -2104,66 +2104,121 @@ body * { will-change: auto !important; }
 
 /* ── MOBILE / iPHONE OPTIMISATIONS ─────────────────────────────── */
 
-/* 1. Remove blue tap flash on iOS */
+/* Remove tap flash */
 *, *::before, *::after { -webkit-tap-highlight-color: transparent; }
 
-/* 2. Safe area insets — notch + home bar */
+/* Safe area insets — notch + home bar */
 nav {
-  padding-left: max(5%, env(safe-area-inset-left)) !important;
-  padding-right: max(5%, env(safe-area-inset-right)) !important;
+  padding-left: max(4%, env(safe-area-inset-left)) !important;
+  padding-right: max(4%, env(safe-area-inset-right)) !important;
 }
-footer {
-  padding-bottom: max(2rem, env(safe-area-inset-bottom));
-}
+footer { padding-bottom: max(2rem, env(safe-area-inset-bottom)); }
 
-/* 3. iOS input zoom fix — font-size must be >= 16px */
-@media (max-width: 960px) {
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    font-size: 16px !important;
-  }
-}
-
-/* 4. Touch-friendly tap targets — min 44px height */
-@media (max-width: 960px) {
-  .nav-links a,
-  .btn-primary,
-  .btn-outline,
-  .cert-btn,
-  .form-submit {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .form-submit { display: flex; }
-}
-
-/* 5. Kill hover lift animations on touch devices */
+/* Kill hover animations on touch */
 @media (hover: none) {
-  .edu-card:hover, .cert-card:hover,
-  .research-card:hover, .ref-card:hover,
-  .stat-card:hover, .tool-card:hover,
-  .service-card:hover, .tag:hover,
-  .btn-primary:hover, .btn-outline:hover,
-  .hero-socials a:hover, .cert-btn:hover {
+  .edu-card:hover, .cert-card:hover, .research-card:hover,
+  .ref-card:hover, .stat-card:hover, .tool-card:hover,
+  .service-card:hover, .tag:hover, .btn-primary:hover,
+  .btn-outline:hover, .hero-socials a:hover, .cert-btn:hover {
     transform: none !important;
     box-shadow: none !important;
   }
 }
 
-/* 6. Small iPhone (375px and below) */
-@media (max-width: 390px) {
-  .hero { padding: 5rem 4% 3rem; }
-  section { padding: 3rem 4%; }
-  .hero-name .nline { font-size: clamp(2.2rem, 10vw, 3rem); }
-  .sec-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
-  .stat-cards { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .form-wrap { padding: 1.25rem; }
-  .hero-btns { flex-direction: column; }
+@media (max-width: 960px) {
+
+  /* ── NAV ── */
+  .nav-links {
+    gap: 0 !important;
+    padding: 4rem 0 2rem !important;
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+  }
+  .nav-links li { width: 100%; text-align: center; }
+  .nav-links a, .nav-links .cta {
+    display: block !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.2rem !important;
+    min-height: 52px;
+    line-height: 52px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  #lang-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5.5rem 5% 3rem !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+  /* Photo above name */
+  .hero-right {
+    display: flex !important;
+    justify-content: center !important;
+    order: -1 !important;
+  }
+  .photo-wrap {
+    width: 150px !important;
+    height: 150px !important;
+  }
+  .ring1 { width: 178px !important; height: 178px !important; }
+  .ring2 { width: 202px !important; height: 202px !important; }
+
+  .hero-name .nline { font-size: clamp(2.6rem, 10vw, 4rem) !important; }
+  .hero-subtitle { font-size: .82rem !important; }
+  .hero-bio { font-size: .92rem !important; line-height: 1.7 !important; margin: 0 auto 1.5rem !important; }
+  .hero-badge, .hero-btns, .hero-socials { justify-content: center !important; }
+  .hero-btns { flex-direction: column !important; gap: .75rem !important; align-items: center !important; }
   .hero-btns .btn-primary,
-  .hero-btns .btn-outline { width: 100%; text-align: center; }
+  .hero-btns .btn-outline {
+    width: 100% !important;
+    max-width: 320px !important;
+    text-align: center !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 4rem 5% !important; }
+  .sec-title { font-size: clamp(2rem, 8vw, 3rem) !important; margin-bottom: 2.5rem !important; }
+
+  /* ── FORM ── */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { font-size: 16px !important; }
+  .form-submit { min-height: 48px !important; font-size: 1rem !important; }
+
+  /* ── TAP TARGETS ── */
+  .cert-btn, .btn-primary, .btn-outline {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+}
+
+/* ── Small iPhone (390px and below) ── */
+@media (max-width: 390px) {
+  .hero { padding: 5rem 4% 2.5rem !important; }
+  section { padding: 3rem 4% !important; }
+  .hero-name .nline { font-size: clamp(2.2rem, 11vw, 3rem) !important; }
+  .photo-wrap { width: 130px !important; height: 130px !important; }
+  .ring1 { width: 155px !important; height: 155px !important; }
+  .ring2 { width: 176px !important; height: 176px !important; }
+  .stat-cards { gap: 0.75rem !important; }
+  .form-wrap { padding: 1.25rem !important; }
 }
 
 </style>
