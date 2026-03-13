@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volume Discount Calculator · Jatin Lalwani</title>
+<style>
+:root {
+  --navy:    #1C1C1E;
+  --navy-l:  #2C2C2E;
+  --blue:    #8E8E93;
+  --green:   #34C759;
+  --white:   #fff;
+  --offwhite:#F2F2F7;
+  --mid:     rgba(255,255,255,.55);
+  --dim:     rgba(255,255,255,.35);
+  --faint:   rgba(255,255,255,.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Header ── */
+.header {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  text-decoration: none;
+}
+.brand-dot {
+  width: 32px;
+  height: 32px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-dot svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.brand-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+}
+.brand-name span { color: var(--blue); }
+
+.header-badge {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgba(142,142,147,.12);
+  border: 1px solid rgba(142,142,147,.25);
+  padding: .3rem .75rem;
+  border-radius: 20px;
+}
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  max-width: 720px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Card title ── */
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.card-icon {
+  width: 48px; height: 48px;
+  background: rgba(142,142,147,.15);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-icon svg { width: 24px; height: 24px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.card-heading { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; font-size: 1.4rem; font-weight: 600; margin-bottom: .3rem; }
+.card-sub { font-size: .85rem; color: var(--dim); line-height: 1.5; }
+.card-title-text { flex: 1; }
+.free-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(52,199,89,.1); border: 1px solid rgba(52,199,89,.3);
+  color: var(--green); font-size: .7rem; font-weight: 700;
+  padding: .3rem .8rem; border-radius: 20px; letter-spacing: .08em;
+  white-space: nowrap; flex-shrink: 0; align-self: flex-start;
+}
+.free-pill::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── Inputs ── */
+.inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+.field { display: flex; flex-direction: column; gap: .45rem; }
+.field label { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.input-wrap { position: relative; }
+.input-sym { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,.35); font-size: .9rem; pointer-events: none; }
+input[type="number"], input[type="text"] {
+  width: 100%;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  padding: .75rem .9rem;
+  color: var(--white);
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  -moz-appearance: textfield;
+}
+input[type="number"] { padding-left: 2rem; }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input:focus { border-color: var(--blue); background: rgba(142,142,147,.1); }
+
+/* ── Slider ── */
+.slider-block { margin-bottom: 2rem; }
+.slider-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .8rem; }
+.slider-lbl { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.slider-live { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; font-size: 2rem; font-weight: 600; }
+.slider-live small { font-size: .9rem; color: var(--dim); font-weight: 400; margin-left: .3rem; }
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: rgba(255,255,255,.1);
+  border-radius: 2px; outline: none; cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid var(--navy);
+  box-shadow: 0 0 0 2px rgba(142,142,147,.5);
+  cursor: pointer; transition: transform .15s, box-shadow .15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 0 0 5px rgba(142,142,147,.2); }
+input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--blue); border: 3px solid var(--navy); cursor: pointer;
+}
+.slider-marks { display: flex; justify-content: space-between; margin-top: .5rem; }
+.slider-marks span { font-size: .68rem; color: rgba(255,255,255,.25); }
+
+/* ── Results ── */
+.results-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.result-box {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: border-color .3s;
+}
+.result-box.hl { background: rgba(142,142,147,.1); border-color: rgba(142,142,147,.3); }
+.r-lbl { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: .5rem; }
+.r-val { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; font-size: 1.5rem; font-weight: 600; transition: color .25s; }
+.r-val.green { color: var(--green); }
+.r-sub { font-size: .72rem; color: rgba(255,255,255,.3); margin-top: .3rem; transition: color .25s; }
+.r-sub.green { color: var(--green); }
+
+/* ── Tier table ── */
+.tier-table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+.tier-table thead tr { border-bottom: 1px solid rgba(255,255,255,.08); }
+.tier-table th {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  padding: .65rem .8rem; text-align: left;
+}
+.tier-table th:not(:first-child) { text-align: right; }
+.tier-table td {
+  padding: .75rem .8rem; font-size: .85rem;
+  color: rgba(255,255,255,.45); border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.tier-table td:not(:first-child) { text-align: right; }
+.tier-table tr.active td { color: var(--white); font-weight: 600; }
+.tier-table tr.active { background: rgba(142,142,147,.08); }
+.t-badge {
+  display: inline-block;
+  background: rgba(52,199,89,.15); border: 1px solid rgba(52,199,89,.3);
+  color: var(--green); font-size: .63rem; font-weight: 700;
+  padding: .15rem .5rem; border-radius: 20px; letter-spacing: .06em;
+  margin-left: .5rem; vertical-align: middle;
+}
+.disc { color: rgba(255,255,255,.3); }
+.disc.on { color: var(--green); }
+
+/* ── How tiers work ── */
+.explainer {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+}
+.explainer h3 { font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: .8rem; }
+.explainer p { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.7; }
+.explainer p + p { margin-top: .5rem; }
+
+/* ── Footer ── */
+.footer {
+  width: 100%; max-width: 720px;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy { font-size: .78rem; color: rgba(255,255,255,.25); }
+.footer-link { font-size: .78rem; color: var(--blue); text-decoration: none; font-weight: 600; transition: color .2s; }
+.footer-link:hover { color: var(--white); }
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  body { padding: 1.5rem 1rem 3rem; }
+  .card { padding: 1.5rem; }
+  .inputs-row { grid-template-columns: 1fr; }
+  .results-row { grid-template-columns: 1fr; }
+  .card-title-row { flex-direction: column; }
+  .slider-live { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <a class="brand" href="https://jatinlalwaniworrk-ui.github.io/jatinlalwani.github.io/" target="_blank">
+    <div class="brand-dot">
+      <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    </div>
+    <span class="brand-name">Jatin <span>Lalwani</span></span>
+  </a>
+  <span class="header-badge">Free Resource</span>
+</header>
+
+<!-- Main card -->
+<div class="card">
+
+  <div class="card-title-row">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    </div>
+    <div class="card-title-text">
+      <div class="card-heading">Volume Discount Calculator</div>
+      <div class="card-sub">Enter your base unit price and move the slider to see tiered pricing and total savings — instantly.</div>
+    </div>
+    <span class="free-pill">FREE</span>
+  </div>
+
+  <!-- Inputs -->
+  <div class="inputs-row">
+    <div class="field">
+      <label for="vd-price">Base Unit Price</label>
+      <div class="input-wrap">
+        <span class="input-sym" id="vd-sym">€</span>
+        <input type="number" id="vd-price" value="49.99" min="0.01" step="0.01">
+      </div>
+    </div>
+    <div class="field">
+      <label for="vd-currency">Currency</label>
+      <div class="input-wrap">
+        <input type="text" id="vd-currency" value="EUR" maxlength="3" style="text-transform:uppercase;padding-left:.9rem">
+      </div>
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div class="slider-block">
+    <div class="slider-top">
+      <span class="slider-lbl">Quantity</span>
+      <span class="slider-live" id="vd-qty-display">50<small>units</small></span>
+    </div>
+    <input type="range" id="vd-qty" min="1" max="500" value="50" step="1">
+    <div class="slider-marks">
+      <span>1</span><span>10</span><span>50</span><span>100</span><span>250</span><span>500</span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-row">
+    <div class="result-box">
+      <div class="r-lbl">Price / Unit</div>
+      <div class="r-val" id="vd-unit-price">€39.99</div>
+      <div class="r-sub" id="vd-unit-was">was €49.99</div>
+    </div>
+    <div class="result-box hl">
+      <div class="r-lbl">Total Cost</div>
+      <div class="r-val" id="vd-total">€1,999.50</div>
+      <div class="r-sub" id="vd-disc-lbl">20% discount applied</div>
+    </div>
+    <div class="result-box">
+      <div class="r-lbl">You Save</div>
+      <div class="r-val green" id="vd-savings">€499.88</div>
+      <div class="r-sub green" id="vd-savings-sub">vs. list price</div>
+    </div>
+  </div>
+
+  <!-- Tier table -->
+  <table class="tier-table">
+    <thead>
+      <tr>
+        <th>Tier</th>
+        <th>Discount</th>
+        <th>Unit Price</th>
+        <th>Your Total</th>
+      </tr>
+    </thead>
+    <tbody id="vd-tbody"></tbody>
+  </table>
+
+  <!-- Explainer -->
+  <div class="explainer">
+    <h3>How volume tiers work</h3>
+    <p>Volume discounts reward larger orders by reducing the per-unit cost as quantity increases. The discount applies to all units once you reach a new tier — not just the units above the threshold.</p>
+    <p>Use this tool to benchmark your supplier quotes, structure your own B2B pricing, or model the margin impact of promotional bundles.</p>
+  </div>
+
+</div><!-- /.card -->
+
+<!-- Footer -->
+<footer class="footer">
+  <span class="footer-copy">Built by Jatin Lalwani · Pricing &amp; Category Manager</span>
+  <a class="footer-link" href="https://jatinlalwaniworrk-ui.github.io/jatinlalwani.github.io/#services" target="_blank">View freelance services →</a>
+</footer>
+
+<script>
+(function () {
+  const TIERS = [
+    { min: 1,   max: 9,         disc: 0.00, label: '1 – 9' },
+    { min: 10,  max: 49,        disc: 0.10, label: '10 – 49' },
+    { min: 50,  max: 99,        disc: 0.20, label: '50 – 99' },
+    { min: 100, max: 249,       disc: 0.30, label: '100 – 249' },
+    { min: 250, max: 499,       disc: 0.40, label: '250 – 499' },
+    { min: 500, max: Infinity,  disc: 0.50, label: '500+' },
+  ];
+
+  const SYM_MAP = { EUR:'€', USD:'$', GBP:'£', CHF:'CHF ', SEK:'kr ', DKK:'kr ', JPY:'¥', AUD:'A$', CAD:'C$' };
+  const sym = c => SYM_MAP[c.toUpperCase()] ?? (c.toUpperCase() + ' ');
+
+  const fmt = (n, s) =>
+    s + n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const getTier = qty => TIERS.find(t => qty >= t.min && qty <= t.max);
+
+  function update() {
+    const base = Math.max(0.01, parseFloat(document.getElementById('vd-price').value) || 0);
+    const qty  = parseInt(document.getElementById('vd-qty').value, 10);
+    const code = document.getElementById('vd-currency').value.trim();
+    const s    = sym(code);
+
+    const tier  = getTier(qty);
+    const unitP = base * (1 - tier.disc);
+    const total = unitP * qty;
+    const list  = base * qty;
+    const saved = list - total;
+
+    // Currency symbol
+    document.getElementById('vd-sym').textContent = s.trim().length <= 1 ? s : '';
+
+    // Qty
+    document.getElementById('vd-qty-display').innerHTML = qty + '<small>units</small>';
+
+    // Slider fill
+    const pct = ((qty - 1) / 499) * 100;
+    document.getElementById('vd-qty').style.background =
+      `linear-gradient(to right, #8E8E93 ${pct}%, rgba(255,255,255,.1) ${pct}%)`;
+
+    // Results
+    document.getElementById('vd-unit-price').textContent = fmt(unitP, s);
+    document.getElementById('vd-unit-was').textContent   = tier.disc > 0 ? 'was ' + fmt(base, s) : 'list price';
+    document.getElementById('vd-total').textContent      = fmt(total, s);
+    document.getElementById('vd-disc-lbl').textContent   = tier.disc > 0
+      ? (tier.disc * 100).toFixed(0) + '% discount applied'
+      : 'no discount at this qty';
+    document.getElementById('vd-savings').textContent    = fmt(saved, s);
+    document.getElementById('vd-savings-sub').textContent = tier.disc > 0
+      ? 'vs. ' + fmt(list, s) + ' list' : 'increase qty to unlock';
+
+    // Table
+    const tbody = document.getElementById('vd-tbody');
+    tbody.innerHTML = '';
+    TIERS.forEach(t => {
+      const active = (t === tier);
+      const tp = base * (1 - t.disc);
+      const tr = document.createElement('tr');
+      if (active) tr.className = 'active';
+      tr.innerHTML = `
+        <td>${t.label}${active ? '<span class="t-badge">ACTIVE</span>' : ''}</td>
+        <td><span class="disc${active && t.disc > 0 ? ' on' : ''}">
+          ${t.disc > 0 ? '−' + (t.disc * 100).toFixed(0) + '%' : '—'}</span></td>
+        <td>${fmt(tp, s)}</td>
+        <td>${active ? fmt(total, s) : '—'}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['vd-price', 'vd-qty', 'vd-currency'].forEach(id =>
+    document.getElementById(id).addEventListener('input', update));
+  update();
+})();
+</script>
+
+</body>
+</html>

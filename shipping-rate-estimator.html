@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipping Rate Estimator · Jatin Lalwani</title>
+<style>
+:root {
+  --navy:   #1C1C1E;
+  --blue:   #8E8E93;
+  --green:  #34C759;
+  --orange: #FF9F0A;
+  --red:    #FF453A;
+  --white:  #fff;
+  --dim:    rgba(255,255,255,.35);
+  --faint:  rgba(255,255,255,.07);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--navy);color:var(--white);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2.5rem 1.5rem 4rem}
+
+/* Header */
+.header{width:100%;max-width:780px;display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;gap:1rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.brand-dot{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.brand-dot svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.brand-name{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1rem;font-weight:600;color:var(--white)}
+.brand-name span{color:var(--blue)}
+.header-badge{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:rgba(142,142,147,.12);border:1px solid rgba(142,142,147,.25);padding:.3rem .75rem;border-radius:20px}
+
+/* Card */
+.card{width:100%;max-width:780px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:2.5rem;margin-bottom:1.5rem}
+
+/* Card header */
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.card-icon{width:48px;height:48px;background:rgba(142,142,147,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card-heading{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1.4rem;font-weight:600;margin-bottom:.3rem}
+.card-sub{font-size:.85rem;color:var(--dim);line-height:1.5}
+.card-title-text{flex:1}
+.free-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.3);color:var(--green);font-size:.7rem;font-weight:700;padding:.3rem .8rem;border-radius:20px;letter-spacing:.08em;white-space:nowrap;flex-shrink:0;align-self:flex-start}
+.free-pill::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Inputs grid */
+.inputs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem}
+.field{display:flex;flex-direction:column;gap:.45rem}
+.field label{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+select,input[type="number"]{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.75rem .9rem;color:var(--white);font-family:inherit;font-size:.95rem;font-weight:500;outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238E8E93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem}
+select option{background:var(--navy);color:var(--white)}
+input:focus,select:focus{border-color:var(--blue);background:rgba(142,142,147,.1)}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+/* Slider */
+.slider-block{margin-bottom:2rem}
+.slider-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.8rem}
+.slider-lbl{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.slider-live{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:2rem;font-weight:600}
+.slider-live small{font-size:.9rem;color:var(--dim);font-weight:400;margin-left:.3rem}
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;outline:none;cursor:pointer}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--blue);border:3px solid var(--navy);box-shadow:0 0 0 2px rgba(142,142,147,.5);cursor:pointer;transition:transform .15s,box-shadow .15s}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 0 5px rgba(142,142,147,.2)}
+input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--blue);border:3px solid var(--navy);cursor:pointer}
+.slider-marks{display:flex;justify-content:space-between;margin-top:.5rem}
+.slider-marks span{font-size:.68rem;color:rgba(255,255,255,.25)}
+
+/* Zone pills */
+.zone-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.zone-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.zone-pill:hover{border-color:var(--blue);color:var(--white)}
+.zone-pill.active{background:rgba(142,142,147,.2);border-color:var(--blue);color:var(--white)}
+
+/* Cheapest banner */
+.cheapest-banner{display:flex;align-items:center;gap:.75rem;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.25);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.5rem;opacity:0;transition:opacity .3s}
+.cheapest-banner.show{opacity:1}
+.cheapest-banner svg{width:20px;height:20px;stroke:var(--green);flex-shrink:0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cheapest-banner p{font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.5}
+.cheapest-banner strong{color:var(--white)}
+
+/* Carrier table */
+.carrier-table{width:100%;border-collapse:collapse;margin-bottom:2rem}
+.carrier-table thead tr{border-bottom:1px solid rgba(255,255,255,.08)}
+.carrier-table th{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:.65rem .9rem;text-align:left}
+.carrier-table th:not(:first-child){text-align:right}
+.carrier-table td{padding:.85rem .9rem;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.04);color:rgba(255,255,255,.6);vertical-align:middle}
+.carrier-table td:not(:first-child){text-align:right}
+.carrier-table tr.best-row td{color:var(--white);font-weight:600}
+.carrier-table tr.best-row{background:rgba(52,199,89,.06);border-left:3px solid var(--green)}
+.carrier-table tr:not(.best-row){border-left:3px solid transparent}
+.carrier-name{display:flex;align-items:center;gap:.65rem}
+.carrier-logo{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;letter-spacing:-.02em;flex-shrink:0}
+.carrier-name-text{font-weight:600;color:var(--white);font-size:.88rem}
+.carrier-type{font-size:.72rem;color:var(--dim);font-weight:400}
+.best-badge{display:inline-block;background:rgba(52,199,89,.15);border:1px solid rgba(52,199,89,.3);color:var(--green);font-size:.63rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;letter-spacing:.06em;margin-left:.5rem;vertical-align:middle}
+.price-cell{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1.05rem}
+.delivery-chip{display:inline-block;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.72rem;font-weight:500;padding:.2rem .6rem;border-radius:20px}
+.na-cell{color:rgba(255,255,255,.2);font-size:.82rem}
+
+/* Add-ons */
+.addons-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2rem}
+.addon-toggle{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.5rem .9rem;cursor:pointer;transition:all .2s;user-select:none}
+.addon-toggle input[type="checkbox"]{display:none}
+.addon-toggle.checked{background:rgba(142,142,147,.15);border-color:var(--blue)}
+.addon-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s}
+.addon-toggle.checked .addon-dot{background:var(--blue)}
+.addon-lbl{font-size:.8rem;font-weight:500;color:rgba(255,255,255,.6);transition:color .2s}
+.addon-toggle.checked .addon-lbl{color:var(--white)}
+.addon-price{font-size:.75rem;color:var(--dim);margin-left:.25rem}
+
+/* Disclaimer */
+.disclaimer{background:rgba(255,159,10,.06);border:1px solid rgba(255,159,10,.2);border-radius:12px;padding:1rem 1.2rem;display:flex;gap:.75rem;align-items:flex-start;margin-bottom:2rem}
+.disclaimer svg{width:16px;height:16px;stroke:var(--orange);flex-shrink:0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:.1rem}
+.disclaimer p{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.6}
+
+/* CTA */
+.cta-strip{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.2rem 1.5rem}
+.cta-text{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.5}
+.cta-text strong{color:var(--white);font-weight:600}
+.cta-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-solid{background:var(--blue);color:var(--white);border:none;padding:.6rem 1.4rem;border-radius:8px;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .2s;white-space:nowrap;display:inline-block}
+.btn-solid:hover{background:#636366;transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.07);color:var(--white);border:1px solid rgba(255,255,255,.15);padding:.6rem 1.4rem;border-radius:8px;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:.5rem}
+.btn-ghost:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+
+/* Footer */
+.footer{width:100%;max-width:780px;margin-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.78rem;color:rgba(255,255,255,.25)}
+.footer-link{font-size:.78rem;color:var(--blue);text-decoration:none;font-weight:600;transition:color .2s}
+.footer-link:hover{color:var(--white)}
+
+/* Responsive */
+@media(max-width:580px){
+  body{padding:1.5rem 1rem 3rem}
+  .card{padding:1.5rem}
+  .inputs-grid{grid-template-columns:1fr}
+  .card-top{flex-direction:column}
+  .carrier-table th:nth-child(3),.carrier-table td:nth-child(3){display:none}
+  .slider-live{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="brand" href="https://jatinlalwaniworrk-ui.github.io/jatinlalwani.github.io/" target="_blank">
+    <div class="brand-dot">
+      <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    </div>
+    <span class="brand-name">Jatin <span>Lalwani</span></span>
+  </a>
+  <span class="header-badge">Free Resource</span>
+</header>
+
+<div class="card">
+
+  <div class="card-top">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    </div>
+    <div class="card-title-text">
+      <div class="card-heading">Shipping Rate Estimator</div>
+      <div class="card-sub">Compare DHL, Hermes, DPD, GLS and UPS rates across German ecommerce shipping zones — instantly.</div>
+    </div>
+    <span class="free-pill">FREE</span>
+  </div>
+
+  <!-- Inputs -->
+  <div class="inputs-grid">
+    <div class="field">
+      <label for="pkg-value">Declared Value (€)</label>
+      <input type="number" id="pkg-value" value="50" min="0" step="1" placeholder="50">
+    </div>
+    <div class="field">
+      <label for="pkg-category">Package Category</label>
+      <select id="pkg-category">
+        <option value="s">S — Envelope / Small box (up to 2 kg)</option>
+        <option value="m" selected>M — Standard parcel (up to 5 kg)</option>
+        <option value="l">L — Large parcel (up to 10 kg)</option>
+        <option value="xl">XL — Oversized (up to 31.5 kg)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Weight slider -->
+  <div class="slider-block">
+    <div class="slider-top">
+      <span class="slider-lbl">Weight</span>
+      <span class="slider-live" id="weight-display">2.0<small>kg</small></span>
+    </div>
+    <input type="range" id="weight-slider" min="0.1" max="31.5" value="2" step="0.1">
+    <div class="slider-marks">
+      <span>0.1 kg</span><span>2 kg</span><span>5 kg</span><span>10 kg</span><span>20 kg</span><span>31.5 kg</span>
+    </div>
+  </div>
+
+  <!-- Zone pills -->
+  <div style="margin-bottom:.75rem">
+    <span style="font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Destination Zone</span>
+  </div>
+  <div class="zone-pills" id="zone-pills">
+    <span class="zone-pill active" data-zone="de">🇩🇪 Germany (domestic)</span>
+    <span class="zone-pill" data-zone="at_ch">🇦🇹🇨🇭 Austria / Switzerland</span>
+    <span class="zone-pill" data-zone="eu_west">🇫🇷🇳🇱🇧🇪 EU West (FR/NL/BE/LU)</span>
+    <span class="zone-pill" data-zone="eu_south">🇮🇹🇪🇸🇵🇹 EU South (IT/ES/PT)</span>
+    <span class="zone-pill" data-zone="eu_east">🇵🇱🇨🇿🇭🇺 EU East (PL/CZ/HU)</span>
+    <span class="zone-pill" data-zone="nordic">🇸🇪🇩🇰🇳🇴 Nordic (SE/DK/NO/FI)</span>
+  </div>
+
+  <!-- Add-ons -->
+  <div style="font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:.75rem">Add-ons</div>
+  <div class="addons-row" id="addons-row">
+    <label class="addon-toggle" id="tog-insurance">
+      <input type="checkbox" id="addon-insurance">
+      <span class="addon-dot"></span>
+      <span class="addon-lbl">Insurance</span>
+      <span class="addon-price" id="ins-price">+€0.00</span>
+    </label>
+    <label class="addon-toggle" id="tog-signature">
+      <input type="checkbox" id="addon-signature">
+      <span class="addon-dot"></span>
+      <span class="addon-lbl">Signature required</span>
+      <span class="addon-price">+€1.50</span>
+    </label>
+    <label class="addon-toggle" id="tog-express">
+      <input type="checkbox" id="addon-express">
+      <span class="addon-dot"></span>
+      <span class="addon-lbl">Express / Next day</span>
+      <span class="addon-price">+€4.00</span>
+    </label>
+    <label class="addon-toggle" id="tog-returns">
+      <input type="checkbox" id="addon-returns">
+      <span class="addon-dot"></span>
+      <span class="addon-lbl">Return label included</span>
+      <span class="addon-price">+€2.50</span>
+    </label>
+  </div>
+
+  <!-- Cheapest banner -->
+  <div class="cheapest-banner" id="cheapest-banner">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    <p id="cheapest-text">—</p>
+  </div>
+
+  <!-- Carrier comparison table -->
+  <table class="carrier-table" id="carrier-table">
+    <thead>
+      <tr>
+        <th>Carrier</th>
+        <th>Est. Rate</th>
+        <th>Delivery</th>
+        <th>Tracking</th>
+      </tr>
+    </thead>
+    <tbody id="carrier-tbody"></tbody>
+  </table>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>Rates are indicative based on publicly available carrier pricing for standard B2C ecommerce contracts (2024–2025). Actual rates depend on your contract volume, weight class, and carrier negotiation. Always confirm with your carrier account manager.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <p class="cta-text"><strong>Need a carrier cost model for your catalogue?</strong><br>I build fulfillment cost frameworks that connect shipping rates directly to your margin model.</p>
+    <div class="cta-btns">
+      <a class="btn-ghost" href="shipping-rate-estimator.html" download>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </a>
+      <a class="btn-solid" href="https://jatinlalwaniworrk-ui.github.io/jatinlalwani.github.io/#services" target="_blank">Get in Touch →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-copy">Built by Jatin Lalwani · Pricing &amp; Category Manager</span>
+  <a class="footer-link" href="https://jatinlalwaniworrk-ui.github.io/jatinlalwani.github.io/#services" target="_blank">View freelance services →</a>
+</footer>
+
+<script>
+(function () {
+
+  /* ── Rate data ──────────────────────────────────────────────────────
+     Base rates (€) per carrier per weight category per zone.
+     Zone keys: de | at_ch | eu_west | eu_south | eu_east | nordic
+     Weight cats: s (≤2kg) | m (≤5kg) | l (≤10kg) | xl (≤31.5kg)
+     Sources: public carrier websites / Statista / ecommerce trade press
+  ─────────────────────────────────────────────────────────────────── */
+  const CARRIERS = [
+    {
+      id: 'dhl',
+      name: 'DHL Paket',
+      type: 'Most widely used',
+      color: '#FFCC00',
+      textColor: '#1C1C1E',
+      abbr: 'DHL',
+      tracking: '✓ Full',
+      delivery: { de:'1–2 d', at_ch:'3–5 d', eu_west:'4–6 d', eu_south:'5–7 d', eu_east:'4–6 d', nordic:'5–8 d' },
+      rates: {
+        de:       { s:4.99, m:5.49, l:7.49, xl:14.99 },
+        at_ch:    { s:9.90, m:11.90, l:14.90, xl:24.90 },
+        eu_west:  { s:12.99, m:15.99, l:19.99, xl:34.99 },
+        eu_south: { s:14.99, m:17.99, l:22.99, xl:39.99 },
+        eu_east:  { s:11.99, m:14.99, l:18.99, xl:31.99 },
+        nordic:   { s:15.99, m:18.99, l:23.99, xl:42.99 },
+      }
+    },
+    {
+      id: 'hermes',
+      name: 'Hermes',
+      type: 'Budget-friendly',
+      color: '#009DE0',
+      textColor: '#fff',
+      abbr: 'HER',
+      tracking: '✓ Basic',
+      delivery: { de:'2–3 d', at_ch:'4–6 d', eu_west:'5–7 d', eu_south:'6–9 d', eu_east:'5–8 d', nordic:'6–9 d' },
+      rates: {
+        de:       { s:3.99, m:4.49, l:5.99, xl:11.99 },
+        at_ch:    { s:8.50, m:10.50, l:13.50, xl:22.50 },
+        eu_west:  { s:11.50, m:14.50, l:18.50, xl:32.50 },
+        eu_south: { s:13.99, m:16.99, l:21.99, xl:37.99 },
+        eu_east:  { s:10.99, m:13.99, l:17.99, xl:29.99 },
+        nordic:   { s:14.50, m:17.50, l:22.50, xl:40.50 },
+      }
+    },
+    {
+      id: 'dpd',
+      name: 'DPD',
+      type: 'Strong EU network',
+      color: '#DC0032',
+      textColor: '#fff',
+      abbr: 'DPD',
+      tracking: '✓ Full',
+      delivery: { de:'1–2 d', at_ch:'3–4 d', eu_west:'3–5 d', eu_south:'4–6 d', eu_east:'3–5 d', nordic:'4–7 d' },
+      rates: {
+        de:       { s:4.49, m:5.99, l:8.49, xl:15.49 },
+        at_ch:    { s:9.50, m:11.50, l:14.50, xl:25.50 },
+        eu_west:  { s:12.50, m:15.50, l:19.50, xl:35.50 },
+        eu_south: { s:14.50, m:17.50, l:22.50, xl:38.50 },
+        eu_east:  { s:11.50, m:14.50, l:18.50, xl:31.50 },
+        nordic:   { s:15.50, m:18.50, l:23.50, xl:43.50 },
+      }
+    },
+    {
+      id: 'gls',
+      name: 'GLS',
+      type: 'Reliable mid-tier',
+      color: '#F39200',
+      textColor: '#fff',
+      abbr: 'GLS',
+      tracking: '✓ Full',
+      delivery: { de:'1–2 d', at_ch:'2–4 d', eu_west:'3–5 d', eu_south:'4–7 d', eu_east:'3–5 d', nordic:'5–7 d' },
+      rates: {
+        de:       { s:4.69, m:6.49, l:9.49, xl:16.99 },
+        at_ch:    { s:9.99, m:12.49, l:15.99, xl:27.99 },
+        eu_west:  { s:13.49, m:16.49, l:20.99, xl:37.49 },
+        eu_south: { s:15.49, m:18.99, l:24.49, xl:41.99 },
+        eu_east:  { s:12.49, m:15.49, l:19.99, xl:33.99 },
+        nordic:   { s:16.49, m:19.99, l:25.49, xl:44.99 },
+      }
+    },
+    {
+      id: 'ups',
+      name: 'UPS Standard',
+      type: 'Premium / B2B',
+      color: '#351C15',
+      textColor: '#F5A623',
+      abbr: 'UPS',
+      tracking: '✓ Full',
+      delivery: { de:'1–2 d', at_ch:'2–3 d', eu_west:'3–5 d', eu_south:'4–6 d', eu_east:'3–5 d', nordic:'4–6 d' },
+      rates: {
+        de:       { s:5.99, m:7.99, l:11.99, xl:20.99 },
+        at_ch:    { s:11.99, m:14.99, l:18.99, xl:31.99 },
+        eu_west:  { s:15.99, m:19.99, l:25.99, xl:44.99 },
+        eu_south: { s:17.99, m:22.99, l:29.99, xl:50.99 },
+        eu_east:  { s:14.99, m:18.99, l:24.99, xl:41.99 },
+        nordic:   { s:18.99, m:23.99, l:30.99, xl:52.99 },
+      }
+    },
+  ];
+
+  const ADDON_COSTS = {
+    signature: 1.50,
+    express:   4.00,
+    returns:   2.50,
+  };
+
+  // Insurance: 0.5% of declared value, min €1, max €15
+  function insuranceCost(value) {
+    return Math.min(15, Math.max(1, value * 0.005));
+  }
+
+  let activeZone = 'de';
+
+  // Auto-map weight to category
+  function weightToCat(kg) {
+    if (kg <= 2)    return 's';
+    if (kg <= 5)    return 'm';
+    if (kg <= 10)   return 'l';
+    return 'xl';
+  }
+
+  function fmt(n) {
+    return '€' + n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function getAddons() {
+    const value = parseFloat(document.getElementById('pkg-value').value) || 0;
+    let extra = 0;
+    if (document.getElementById('addon-insurance').checked) extra += insuranceCost(value);
+    if (document.getElementById('addon-signature').checked) extra += ADDON_COSTS.signature;
+    if (document.getElementById('addon-express').checked)   extra += ADDON_COSTS.express;
+    if (document.getElementById('addon-returns').checked)   extra += ADDON_COSTS.returns;
+    return extra;
+  }
+
+  function update() {
+    const kg     = parseFloat(document.getElementById('weight-slider').value);
+    const cat    = document.getElementById('pkg-category').value;
+    const addons = getAddons();
+    const value  = parseFloat(document.getElementById('pkg-value').value) || 0;
+
+    // Sync category with weight automatically
+    const autoCat = weightToCat(kg);
+    if (document.getElementById('pkg-category').value !== autoCat) {
+      document.getElementById('pkg-category').value = autoCat;
+    }
+
+    // Weight display
+    document.getElementById('weight-display').innerHTML =
+      kg.toFixed(1) + '<small>kg</small>';
+
+    // Slider fill
+    const pct = ((kg - 0.1) / (31.5 - 0.1)) * 100;
+    document.getElementById('weight-slider').style.background =
+      `linear-gradient(to right, var(--blue) ${pct}%, rgba(255,255,255,.1) ${pct}%)`;
+
+    // Insurance label
+    document.getElementById('ins-price').textContent =
+      '+' + fmt(insuranceCost(value));
+
+    // Calculate rates
+    const results = CARRIERS.map(c => {
+      const base = c.rates[activeZone][document.getElementById('pkg-category').value] ||
+                   c.rates[activeZone]['xl'];
+      const total = base + addons;
+      return { carrier: c, base, total, delivery: c.delivery[activeZone] };
+    }).sort((a, b) => a.total - b.total);
+
+    // Cheapest banner
+    const best = results[0];
+    document.getElementById('cheapest-banner').classList.add('show');
+    document.getElementById('cheapest-text').innerHTML =
+      `<strong>${best.carrier.name}</strong> is the cheapest option for this shipment at <strong>${fmt(best.total)}</strong>${addons > 0 ? ' (incl. add-ons)' : ''} — saving you <strong>${fmt(results[results.length-1].total - best.total)}</strong> vs. the most expensive carrier.`;
+
+    // Table
+    const tbody = document.getElementById('carrier-tbody');
+    tbody.innerHTML = '';
+    results.forEach((r, i) => {
+      const c   = r.carrier;
+      const best = i === 0;
+      const tr  = document.createElement('tr');
+      if (best) tr.className = 'best-row';
+      tr.innerHTML = `
+        <td>
+          <div class="carrier-name">
+            <div class="carrier-logo" style="background:${c.color};color:${c.textColor}">${c.abbr}</div>
+            <div>
+              <div class="carrier-name-text">${c.name}${best ? '<span class="best-badge">CHEAPEST</span>' : ''}</div>
+              <div class="carrier-type">${c.type}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="price-cell">${fmt(r.total)}</span>${addons > 0 ? `<br><span style="font-size:.72rem;color:var(--dim)">base ${fmt(r.base)}</span>` : ''}</td>
+        <td><span class="delivery-chip">${r.delivery}</span></td>
+        <td style="font-size:.82rem;color:rgba(255,255,255,.5)">${c.tracking}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Zone pills
+  document.querySelectorAll('.zone-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.zone-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeZone = pill.dataset.zone;
+      update();
+    });
+  });
+
+  // Add-on toggles
+  document.querySelectorAll('.addon-toggle').forEach(tog => {
+    tog.addEventListener('click', () => {
+      const cb = tog.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      tog.classList.toggle('checked', cb.checked);
+      update();
+    });
+  });
+
+  // Weight → category sync
+  document.getElementById('weight-slider').addEventListener('input', () => {
+    const kg = parseFloat(document.getElementById('weight-slider').value);
+    document.getElementById('pkg-category').value = weightToCat(kg);
+    update();
+  });
+
+  document.getElementById('pkg-category').addEventListener('change', update);
+  document.getElementById('pkg-value').addEventListener('input', update);
+
+  update();
+})();
+</script>
+</body>
+</html>

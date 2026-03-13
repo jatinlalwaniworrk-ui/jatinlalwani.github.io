@@ -2306,6 +2306,67 @@ p, h1, h2, h3, h4, li, span, a, div {
   .sec-title { font-size: clamp(1.75rem, 8.5vw, 2.5rem) !important; }
 }
 
+
+/* ── FREE RESOURCES (inside freelance section) ── */
+.resources-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-top:3.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.resources-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}
+.resources-desc{font-size:.87rem;color:rgba(255,255,255,.45);max-width:420px;line-height:1.6}
+.calc-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;transition:box-shadow .3s,border-color .3s;margin-bottom:1.5rem}
+.calc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(142,142,147,.06),transparent 60%);pointer-events:none}
+.calc-card:hover{box-shadow:0 20px 48px rgba(142,142,147,.12);border-color:rgba(142,142,147,.25)}
+.calc-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.calc-card-meta{display:flex;align-items:center;gap:.9rem}
+.calc-icon{width:44px;height:44px;background:rgba(142,142,147,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.calc-icon svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.calc-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1.15rem;font-weight:600;color:var(--white)}
+.calc-subtitle{font-size:.82rem;color:rgba(255,255,255,.4);margin-top:.2rem}
+.free-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.3);color:#34C759;font-size:.7rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;letter-spacing:.08em;white-space:nowrap;flex-shrink:0}
+.free-badge::before{content:'';width:6px;height:6px;background:#34C759;border-radius:50%;animation:pulse 2s infinite}
+.calc-inputs{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem}
+.calc-field{display:flex;flex-direction:column;gap:.4rem}
+.calc-field label{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.calc-field-inner{position:relative}
+.calc-sym{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.35);font-size:.9rem;pointer-events:none}
+.calc-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.7rem .9rem .7rem 2.1rem;color:var(--white);font-family:'Inter',sans-serif;font-size:.95rem;font-weight:500;outline:none;transition:border-color .2s,background .2s;-moz-appearance:textfield}
+.calc-input::-webkit-outer-spin-button,.calc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.calc-input:focus{border-color:var(--blue);background:rgba(142,142,147,.1)}
+.calc-input-nosym{padding-left:.9rem}
+.slider-wrap{margin-bottom:2rem}
+.slider-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.75rem}
+.slider-label{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.slider-live{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1.8rem;font-weight:600;color:var(--white);line-height:1}
+.slider-live small{font-size:.9rem;color:rgba(255,255,255,.35);font-weight:400;margin-left:.3rem}
+.qty-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;outline:none;cursor:pointer}
+.qty-range::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #1C1C1E;box-shadow:0 0 0 2px rgba(142,142,147,.5);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.qty-range::-webkit-slider-thumb:hover{transform:scale(1.25);box-shadow:0 0 0 5px rgba(142,142,147,.2)}
+.qty-range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #1C1C1E;cursor:pointer}
+.slider-marks{display:flex;justify-content:space-between;margin-top:.5rem}
+.slider-mark{font-size:.68rem;color:rgba(255,255,255,.25);font-weight:500}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.result-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.1rem;text-align:center;transition:border-color .3s,background .3s}
+.result-box.hl{background:rgba(142,142,147,.1);border-color:rgba(142,142,147,.3)}
+.result-lbl{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem}
+.result-val{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:1.5rem;font-weight:600;color:var(--white);transition:color .25s}
+.result-val.green{color:#34C759}
+.result-sub{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:.3rem;transition:color .25s}
+.result-sub.green{color:#34C759}
+.tier-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}
+.tier-table thead tr{border-bottom:1px solid rgba(255,255,255,.08)}
+.tier-table th{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.6rem .8rem;text-align:left}
+.tier-table th:not(:first-child){text-align:right}
+.tier-table td{padding:.75rem .8rem;font-size:.85rem;color:rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.04)}
+.tier-table td:not(:first-child){text-align:right}
+.tier-table tr.active-tier td{color:var(--white);font-weight:600}
+.tier-table tr.active-tier{background:rgba(142,142,147,.08)}
+.tier-badge{display:inline-block;background:rgba(52,199,89,.15);border:1px solid rgba(52,199,89,.3);color:#34C759;font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;letter-spacing:.06em;margin-left:.45rem;vertical-align:middle}
+.disc-val{color:rgba(255,255,255,.35)}
+.disc-val.active{color:#34C759}
+.calc-cta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.2rem 1.5rem}
+.calc-cta-text{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.5}
+.calc-cta-text strong{color:var(--white);font-weight:600}
+.calc-cta-btn{background:var(--blue);color:var(--white);border:none;padding:.6rem 1.4rem;border-radius:8px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:.5rem}
+.calc-cta-btn:hover{background:#636366;transform:translateY(-2px)}
+@media(max-width:600px){.calc-inputs{grid-template-columns:1fr}.calc-results{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -2732,6 +2793,159 @@ p, h1, h2, h3, h4, li, span, a, div {
           <span class="lang-en">AI-powered automated pricing workflows built with n8n and Claude. From scheduled competitor price monitoring to rule-based price update pipelines that keep your pricing current without manual effort.</span><span class="lang-de" hidden>KI-gestützte automatisierte Pricing-Workflows mit n8n und Claude. Von der geplanten Wettbewerberpreisüberwachung bis hin zu regelbasierten Preisaktualisierungs-Pipelines, die Ihre Preise ohne manuellen Aufwand aktuell halten.</span>
           <span class="lang-de" hidden>KI-gestützte automatisierte Preis-Workflows mit n8n und Claude. Von Wettbewerber-Preismonitoring bis zu regelbasierten Preis-Update-Pipelines.</span>
         </p>
+      </div>
+    </div>
+
+    <!-- FREE RESOURCES -->
+    <div class="resources-header" data-reveal>
+      <div>
+        <p class="resources-label">Free Resources</p>
+        <p class="resources-desc">Interactive tools to explore pricing decisions before we work together.</p>
+      </div>
+    </div>
+
+    <!-- Tool 1: Volume Discount Calculator -->
+    <div class="calc-card" data-reveal data-from="scale">
+      <div class="calc-card-header">
+        <div class="calc-card-meta">
+          <div class="calc-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          </div>
+          <div>
+            <div class="calc-title">Volume Discount Calculator</div>
+            <div class="calc-subtitle">Real-time tiered pricing — adjust quantity and see your savings</div>
+          </div>
+        </div>
+        <span class="free-badge">FREE</span>
+      </div>
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label for="vd-price">Base Unit Price</label>
+          <div class="calc-field-inner">
+            <span class="calc-sym" id="vd-sym">€</span>
+            <input class="calc-input" type="number" id="vd-price" value="49.99" min="0.01" step="0.01">
+          </div>
+        </div>
+        <div class="calc-field">
+          <label for="vd-currency">Currency</label>
+          <div class="calc-field-inner">
+            <input class="calc-input calc-input-nosym" type="text" id="vd-currency" value="EUR" maxlength="3" style="text-transform:uppercase">
+          </div>
+        </div>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top">
+          <span class="slider-label">Quantity</span>
+          <span class="slider-live" id="vd-qty-display">50<small>units</small></span>
+        </div>
+        <input class="qty-range" type="range" id="vd-qty" min="1" max="500" value="50" step="1">
+        <div class="slider-marks">
+          <span class="slider-mark">1</span><span class="slider-mark">10</span><span class="slider-mark">50</span><span class="slider-mark">100</span><span class="slider-mark">250</span><span class="slider-mark">500</span>
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="result-box">
+          <div class="result-lbl">Price / Unit</div>
+          <div class="result-val" id="vd-unit-price">€39.99</div>
+          <div class="result-sub" id="vd-unit-was">was €49.99</div>
+        </div>
+        <div class="result-box hl">
+          <div class="result-lbl">Total Cost</div>
+          <div class="result-val" id="vd-total">€1,999.50</div>
+          <div class="result-sub" id="vd-disc-label">20% discount applied</div>
+        </div>
+        <div class="result-box">
+          <div class="result-lbl">You Save</div>
+          <div class="result-val green" id="vd-savings">€499.88</div>
+          <div class="result-sub green" id="vd-savings-sub">vs. list price</div>
+        </div>
+      </div>
+      <table class="tier-table">
+        <thead><tr><th>Tier</th><th>Discount</th><th>Unit Price</th><th>Your Total</th></tr></thead>
+        <tbody id="vd-tbody"></tbody>
+      </table>
+      <div class="calc-cta">
+        <p class="calc-cta-text"><strong>Want a custom volume pricing model?</strong><br>I build tailored discount structures for your specific margins and category.</p>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <a href="volume-discount-calculator.html" download class="calc-cta-btn" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+          <a href="#services" class="calc-cta-btn" onclick="document.getElementById('f-service').value='Pricing Strategy';setTimeout(()=>document.getElementById('inquiry-form').scrollIntoView({behavior:'smooth'}),100);return false;">Get in Touch →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool 2: Shipping Rate Estimator -->
+    <div class="calc-card" data-reveal data-from="scale">
+      <div class="calc-card-header">
+        <div class="calc-card-meta">
+          <div class="calc-icon">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="calc-title">Shipping Rate Estimator</div>
+            <div class="calc-subtitle">Compare DHL, Hermes, DPD, GLS &amp; UPS across German ecommerce zones</div>
+          </div>
+        </div>
+        <span class="free-badge">FREE</span>
+      </div>
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label for="sr-value">Declared Value</label>
+          <div class="calc-field-inner">
+            <span class="calc-sym">€</span>
+            <input class="calc-input" type="number" id="sr-value" value="50" min="0" step="1">
+          </div>
+        </div>
+        <div class="calc-field">
+          <label for="sr-cat">Package Size</label>
+          <div class="calc-field-inner">
+            <select class="calc-input calc-input-nosym" id="sr-cat" style="padding-left:.9rem;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%238E8E93%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem;appearance:none;-webkit-appearance:none">
+              <option value="s">S — up to 2 kg</option>
+              <option value="m" selected>M — up to 5 kg</option>
+              <option value="l">L — up to 10 kg</option>
+              <option value="xl">XL — up to 31.5 kg</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top">
+          <span class="slider-label">Weight</span>
+          <span class="slider-live" id="sr-weight-display">2.0<small>kg</small></span>
+        </div>
+        <input class="qty-range" type="range" id="sr-weight" min="0.1" max="31.5" value="2" step="0.1">
+        <div class="slider-marks">
+          <span class="slider-mark">0.1</span><span class="slider-mark">2 kg</span><span class="slider-mark">5 kg</span><span class="slider-mark">10 kg</span><span class="slider-mark">31.5</span>
+        </div>
+      </div>
+      <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.65rem">Destination</div>
+      <div id="sr-zones" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem">
+        <span class="sr-zone active" data-zone="de" style="background:rgba(142,142,147,.2);border:1px solid var(--blue);color:var(--white);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇩🇪 Germany</span>
+        <span class="sr-zone" data-zone="at_ch" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇦🇹🇨🇭 AT / CH</span>
+        <span class="sr-zone" data-zone="eu_west" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇫🇷🇳🇱 EU West</span>
+        <span class="sr-zone" data-zone="eu_south" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇮🇹🇪🇸 EU South</span>
+        <span class="sr-zone" data-zone="eu_east" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇵🇱🇨🇿 EU East</span>
+        <span class="sr-zone" data-zone="nordic" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:.78rem;font-weight:600;padding:.4rem .9rem;border-radius:20px;cursor:pointer;transition:all .2s">🇸🇪🇩🇰 Nordic</span>
+      </div>
+      <div id="sr-banner" style="display:flex;align-items:center;gap:.75rem;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.25);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.5rem">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <p id="sr-banner-text" style="font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.5">—</p>
+      </div>
+      <table class="tier-table">
+        <thead><tr><th>Carrier</th><th style="text-align:right">Rate</th><th style="text-align:right">Delivery</th></tr></thead>
+        <tbody id="sr-tbody"></tbody>
+      </table>
+      <div class="calc-cta">
+        <p class="calc-cta-text"><strong>Need a carrier cost model for your catalogue?</strong><br>I connect shipping rates directly to your margin model.</p>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <a href="shipping-rate-estimator.html" download class="calc-cta-btn" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+          <a href="#services" class="calc-cta-btn" onclick="document.getElementById('f-service').value='Margin Analysis';setTimeout(()=>document.getElementById('inquiry-form').scrollIntoView({behavior:'smooth'}),100);return false;">Get in Touch →</a>
+        </div>
       </div>
     </div>
 
@@ -3500,6 +3714,125 @@ function toggleQuote(idx) {
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 
+})();
+
+/* ── Volume Discount Calculator ── */
+(function () {
+  const TIERS = [
+    { min:1,   max:9,        disc:0.00, label:'1 – 9' },
+    { min:10,  max:49,       disc:0.10, label:'10 – 49' },
+    { min:50,  max:99,       disc:0.20, label:'50 – 99' },
+    { min:100, max:249,      disc:0.30, label:'100 – 249' },
+    { min:250, max:499,      disc:0.40, label:'250 – 499' },
+    { min:500, max:Infinity, disc:0.50, label:'500+' },
+  ];
+  const SYM = { EUR:'€', USD:'$', GBP:'£', CHF:'CHF ', SEK:'kr ', DKK:'kr ' };
+  const sym = c => SYM[c.toUpperCase()] ?? (c.toUpperCase() + ' ');
+  const fmt = (n, s) => s + n.toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  const getTier = qty => TIERS.find(t => qty >= t.min && qty <= t.max);
+
+  function vdUpdate() {
+    const base = Math.max(0.01, parseFloat(document.getElementById('vd-price').value) || 0);
+    const qty  = parseInt(document.getElementById('vd-qty').value, 10);
+    const s    = sym(document.getElementById('vd-currency').value.trim() || 'EUR');
+    const tier = getTier(qty);
+    const unitP = base * (1 - tier.disc);
+    const total = unitP * qty;
+    const saved = base * qty - total;
+
+    document.getElementById('vd-sym').textContent = s.trim().length <= 1 ? s : s.trim();
+    document.getElementById('vd-qty-display').innerHTML = qty + '<small>units</small>';
+    const pct = ((qty - 1) / 499) * 100;
+    document.getElementById('vd-qty').style.background = `linear-gradient(to right,var(--blue) ${pct}%,rgba(255,255,255,.1) ${pct}%)`;
+    document.getElementById('vd-unit-price').textContent = fmt(unitP, s);
+    document.getElementById('vd-unit-was').textContent   = tier.disc > 0 ? 'was ' + fmt(base, s) : 'list price';
+    document.getElementById('vd-total').textContent      = fmt(total, s);
+    document.getElementById('vd-disc-label').textContent = tier.disc > 0 ? (tier.disc*100).toFixed(0) + '% discount applied' : 'no discount yet';
+    document.getElementById('vd-savings').textContent    = fmt(saved, s);
+    document.getElementById('vd-savings-sub').textContent = tier.disc > 0 ? 'vs. ' + fmt(base*qty, s) + ' list' : 'increase qty to unlock';
+
+    const tbody = document.getElementById('vd-tbody');
+    tbody.innerHTML = '';
+    TIERS.forEach(t => {
+      const active = t === tier;
+      const tp = base * (1 - t.disc);
+      const tr = document.createElement('tr');
+      if (active) tr.className = 'active-tier';
+      tr.innerHTML = `<td>${t.label}${active ? '<span class="tier-badge">ACTIVE</span>' : ''}</td>
+        <td><span class="disc-val${active && t.disc > 0 ? ' active' : ''}">${t.disc > 0 ? '−' + (t.disc*100).toFixed(0) + '%' : '—'}</span></td>
+        <td>${fmt(tp, s)}</td>
+        <td>${active ? fmt(total, s) : '—'}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  ['vd-price','vd-qty','vd-currency'].forEach(id => document.getElementById(id).addEventListener('input', vdUpdate));
+  vdUpdate();
+})();
+
+/* ── Shipping Rate Estimator ── */
+(function () {
+  const CARRIERS = [
+    { name:'DHL Paket',    color:'#FFCC00', tc:'#1C1C1E', abbr:'DHL',
+      delivery:{ de:'1–2 d', at_ch:'3–5 d', eu_west:'4–6 d', eu_south:'5–7 d', eu_east:'4–6 d', nordic:'5–8 d' },
+      rates:{ de:{s:4.99,m:5.49,l:7.49,xl:14.99}, at_ch:{s:9.90,m:11.90,l:14.90,xl:24.90}, eu_west:{s:12.99,m:15.99,l:19.99,xl:34.99}, eu_south:{s:14.99,m:17.99,l:22.99,xl:39.99}, eu_east:{s:11.99,m:14.99,l:18.99,xl:31.99}, nordic:{s:15.99,m:18.99,l:23.99,xl:42.99} } },
+    { name:'Hermes',       color:'#009DE0', tc:'#fff',    abbr:'HER',
+      delivery:{ de:'2–3 d', at_ch:'4–6 d', eu_west:'5–7 d', eu_south:'6–9 d', eu_east:'5–8 d', nordic:'6–9 d' },
+      rates:{ de:{s:3.99,m:4.49,l:5.99,xl:11.99}, at_ch:{s:8.50,m:10.50,l:13.50,xl:22.50}, eu_west:{s:11.50,m:14.50,l:18.50,xl:32.50}, eu_south:{s:13.99,m:16.99,l:21.99,xl:37.99}, eu_east:{s:10.99,m:13.99,l:17.99,xl:29.99}, nordic:{s:14.50,m:17.50,l:22.50,xl:40.50} } },
+    { name:'DPD',          color:'#DC0032', tc:'#fff',    abbr:'DPD',
+      delivery:{ de:'1–2 d', at_ch:'3–4 d', eu_west:'3–5 d', eu_south:'4–6 d', eu_east:'3–5 d', nordic:'4–7 d' },
+      rates:{ de:{s:4.49,m:5.99,l:8.49,xl:15.49}, at_ch:{s:9.50,m:11.50,l:14.50,xl:25.50}, eu_west:{s:12.50,m:15.50,l:19.50,xl:35.50}, eu_south:{s:14.50,m:17.50,l:22.50,xl:38.50}, eu_east:{s:11.50,m:14.50,l:18.50,xl:31.50}, nordic:{s:15.50,m:18.50,l:23.50,xl:43.50} } },
+    { name:'GLS',          color:'#F39200', tc:'#fff',    abbr:'GLS',
+      delivery:{ de:'1–2 d', at_ch:'2–4 d', eu_west:'3–5 d', eu_south:'4–7 d', eu_east:'3–5 d', nordic:'5–7 d' },
+      rates:{ de:{s:4.69,m:6.49,l:9.49,xl:16.99}, at_ch:{s:9.99,m:12.49,l:15.99,xl:27.99}, eu_west:{s:13.49,m:16.49,l:20.99,xl:37.49}, eu_south:{s:15.49,m:18.99,l:24.49,xl:41.99}, eu_east:{s:12.49,m:15.49,l:19.99,xl:33.99}, nordic:{s:16.49,m:19.99,l:25.49,xl:44.99} } },
+    { name:'UPS Standard', color:'#351C15', tc:'#F5A623', abbr:'UPS',
+      delivery:{ de:'1–2 d', at_ch:'2–3 d', eu_west:'3–5 d', eu_south:'4–6 d', eu_east:'3–5 d', nordic:'4–6 d' },
+      rates:{ de:{s:5.99,m:7.99,l:11.99,xl:20.99}, at_ch:{s:11.99,m:14.99,l:18.99,xl:31.99}, eu_west:{s:15.99,m:19.99,l:25.99,xl:44.99}, eu_south:{s:17.99,m:22.99,l:29.99,xl:50.99}, eu_east:{s:14.99,m:18.99,l:24.99,xl:41.99}, nordic:{s:18.99,m:23.99,l:30.99,xl:52.99} } },
+  ];
+  const fmt = n => '€' + n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const weightToCat = kg => kg<=2?'s':kg<=5?'m':kg<=10?'l':'xl';
+  let srZone = 'de';
+
+  function srUpdate() {
+    const kg  = parseFloat(document.getElementById('sr-weight').value);
+    const cat = weightToCat(kg);
+    document.getElementById('sr-cat').value = cat;
+    document.getElementById('sr-weight-display').innerHTML = kg.toFixed(1) + '<small>kg</small>';
+    const pct = ((kg - 0.1) / (31.5 - 0.1)) * 100;
+    document.getElementById('sr-weight').style.background = `linear-gradient(to right,var(--blue) ${pct}%,rgba(255,255,255,.1) ${pct}%)`;
+
+    const results = CARRIERS.map(c => ({ c, rate: c.rates[srZone][cat] })).sort((a,b) => a.rate - b.rate);
+    document.getElementById('sr-banner-text').innerHTML =
+      `<strong>${results[0].c.name}</strong> is cheapest at <strong>${fmt(results[0].rate)}</strong> — saving <strong>${fmt(results[results.length-1].rate - results[0].rate)}</strong> vs. the priciest option.`;
+
+    const tbody = document.getElementById('sr-tbody');
+    tbody.innerHTML = '';
+    results.forEach((r, i) => {
+      const best = i === 0;
+      const tr = document.createElement('tr');
+      if (best) tr.className = 'active-tier';
+      tr.innerHTML = `
+        <td style="display:flex;align-items:center;gap:.6rem">
+          <span style="width:30px;height:30px;border-radius:7px;background:${r.c.color};color:${r.c.tc};font-size:.65rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">${r.c.abbr}</span>
+          <span>${r.c.name}${best?'<span class="tier-badge">CHEAPEST</span>':''}</span>
+        </td>
+        <td style="text-align:right;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;font-size:1rem">${fmt(r.rate)}</td>
+        <td style="text-align:right"><span style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.55);font-size:.72rem;padding:.2rem .6rem;border-radius:20px">${r.c.delivery[srZone]}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.querySelectorAll('.sr-zone').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.sr-zone').forEach(p => { p.style.background='rgba(255,255,255,.06)'; p.style.borderColor='rgba(255,255,255,.1)'; p.style.color='rgba(255,255,255,.6)'; });
+      pill.style.background='rgba(142,142,147,.2)'; pill.style.borderColor='var(--blue)'; pill.style.color='var(--white)';
+      srZone = pill.dataset.zone;
+      srUpdate();
+    });
+  });
+  document.getElementById('sr-weight').addEventListener('input', srUpdate);
+  document.getElementById('sr-cat').addEventListener('change', srUpdate);
+  document.getElementById('sr-value').addEventListener('input', srUpdate);
+  srUpdate();
 })();
 </script>
 
